@@ -1,0 +1,38 @@
+name: Auto-Compact Memory
+
+on:
+  push:
+    paths:
+      - 'memory.jsonl'
+  schedule:
+    # Run weekly on Sunday at midnight UTC
+    - cron: '0 0 * * 0'
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  compact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Run compaction
+        run: python scripts/compact.py
+      
+      - name: Commit if changed
+        run: |
+          git config user.name "Kai Bot"
+          git config user.email "kai@bot.local"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "auto-compact memory"
+            git push
+          fi
+          
