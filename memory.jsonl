@@ -1,0 +1,10 @@
+{"id":"sys-001","type":"meta","ts":"2025-01-08T00:00:00Z","content":"Kai Memory System initialized","version":"1.0"}
+{"id":"p-001","type":"project","ts":"2025-01-08T00:00:00Z","name":"kai-memory","status":"active","priority_stack":["schema design","compaction script","cross-agent testing"],"context":"Cross-agent queryable memory system"}
+{"id":"p-002","type":"project","ts":"2025-01-08T00:00:00Z","name":"heera","status":"active","priority_stack":["agent orchestration","tool schemas","consumer templates"],"context":"Autonomous AI agent platform"}
+{"id":"t-001","type":"task","ts":"2025-01-08T00:00:00Z","project":"kai-memory","status":"done","content":"Define JSONL schema","agent":"claude"}
+{"id":"t-002","type":"task","ts":"2025-01-08T00:00:00Z","project":"kai-memory","status":"open","content":"Create compaction script","agent":"claude"}
+{"id":"t-003","type":"task","ts":"2025-01-08T00:00:00Z","project":"kai-memory","status":"open","content":"Test cross-agent fetch from ChatGPT","agent":null}
+{"id":"f-001","type":"fact","ts":"2025-01-08T00:00:00Z","category":"preference","content":"Does not use em dashes; uses comma, semicolon, hyphen, or period instead"}
+{"id":"f-002","type":"fact","ts":"2025-01-08T00:00:00Z","category":"preference","content":"All references must include source links"}
+{"id":"f-003","type":"fact","ts":"2025-01-08T00:00:00Z","category":"identity","content":"Name: Shankha S. Dey. LinkedIn: linkedin.com/in/shankhasdey"}
+{"id":"f-004","type":"fact","ts":"2025-01-08T00:00:00Z","category":"tech","content":"Prefers vanilla HTML/JS frontend, Python backend, GitHub to Render deployment"}
