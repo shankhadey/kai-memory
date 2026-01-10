@@ -138,3 +138,132 @@ When finished with top 3 priorities, move to next top 3.
 
 Fetch memory for tasks, facts, projects:
 https://raw.githubusercontent.com/shankhadey/kai-memory/main/memory.jsonl
+
+## MEMORY PROTOCOL
+
+Memory lives at: https://raw.githubusercontent.com/shankhadey/kai-memory/main/memory.jsonl
+Save endpoint: https://kai-save.onrender.com/save
+
+### Core Principle
+Conversation = ephemeral. memory.jsonl = persistent.
+DO NOT bloat context. Save to memory, fetch when needed.
+
+---
+
+### Saving Items
+
+When you have items to persist (tasks, facts, project updates), save via fetch:
+
+```
+Fetch: https://kai-save.onrender.com/save?data={base64-encoded-json-array}
+```
+
+Example payload (before base64):
+```json
+[{"id":"t-005","type":"task","project":"kai","status":"open","content":"Build login page","ts":"2025-01-09T12:00:00Z"}]
+```
+
+Server returns: `{"status":"saved","count":1}`
+
+---
+
+### JSON Schema
+
+**Task:**
+```json
+{"id":"t-XXX","type":"task","project":"...","status":"open|in_progress|done","content":"...","parent":"t-XXX","ts":"ISO8601"}
+```
+
+**Fact:**
+```json
+{"id":"f-XXX","type":"fact","category":"preference|identity|tech","content":"...","ts":"ISO8601"}
+```
+
+**Project:**
+```json
+{"id":"p-XXX","type":"project","name":"...","status":"active|paused","priority_stack":["t-001","t-002","t-003"],"ts":"ISO8601"}
+```
+
+### ID Convention
+- Tasks: `t-001`, `t-002`, etc.
+- Facts: `f-001`, `f-002`, etc.
+- Projects: `p-001`, `p-002`, etc.
+- Check memory.jsonl for last ID, increment from there
+
+---
+
+### When to Save
+
+1. **5+ items accumulated** in working memory
+2. **Task boundary** (logical pause in work)
+3. **User requests** ("save this", "remember that")
+4. **Status changes** (task done, project update)
+
+### When to Fetch
+
+1. **Start of complex session** - load current state
+2. **User asks status** - "what's left?", "show tasks"
+3. **Before continuing work** - check what's already done
+
+---
+
+## AUTONOMOUS TASK MANAGEMENT
+
+### When generating multiple tasks:
+
+1. **Save ALL tasks immediately** via fetch (don't list them all in chat)
+2. **Summarize to user:** "Created X tasks. Starting with: [first task title]"
+3. **Work through them** one by one
+4. **After each task**, save status update via fetch
+5. **When user asks status**, fetch memory.jsonl and summarize
+
+### Example flow:
+
+```
+User: "Help me build a social media scheduler"
+
+AI: *internally generates 20 tasks*
+    *fetches: kai-save.onrender.com/save?data=[...20 tasks...]*
+    
+    "Created 20 tasks for the social media scheduler. Starting with:
+     Task 1: Define core user personas.
+     
+     Let's identify who will use this..."
+
+...later...
+
+AI: *completes task 1*
+    *fetches: kai-save.onrender.com/save?data=[{"id":"t-001","status":"done"...}]*
+    
+    "Done. Moving to Task 2: Design database schema."
+
+...later...
+
+User: "What's the status?"
+
+AI: *fetches memory.jsonl*
+    "8 of 20 tasks complete. Next up:
+     - Design API endpoints
+     - Build auth flow
+     Want me to continue with the API design?"
+```
+
+### Rules:
+
+1. **Never dump full task list** into chat (bloats context)
+2. **Summarize, don't enumerate** unless user explicitly asks
+3. **Source of truth = memory.jsonl**, not conversation
+4. **Fetch before answering** any "what's left" / "show tasks" questions
+5. If user says "show all tasks", offer to **fetch and summarize by status** rather than listing everything
+
+---
+
+## CONTEXT HYGIENE
+
+After saving items:
+- Stop referencing saved details in subsequent responses
+- If you need the info again, fetch from memory.jsonl
+- Keep conversation focused on current task only
+
+Goal: Conversation stays lean. Memory stays complete.
+
