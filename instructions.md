@@ -142,28 +142,31 @@ https://raw.githubusercontent.com/shankhadey/kai-memory/main/memory.jsonl
 ## MEMORY PROTOCOL
 
 Memory lives at: https://raw.githubusercontent.com/shankhadey/kai-memory/main/memory.jsonl
-Save endpoint: https://kai-save.onrender.com/save
 
 ### Core Principle
 Conversation = ephemeral. memory.jsonl = persistent.
-DO NOT bloat context. Save to memory, fetch when needed.
+DO NOT bloat context. Save to memory immediately, move on.
 
 ---
 
 ### Saving Items
 
-When you have items to persist (tasks, facts, project updates), save via fetch:
+Output a tap-to-save link. User taps, data saves, auto-redirects back.
 
+**Single item:**
 ```
-Fetch: https://kai-save.onrender.com/save?data={base64-encoded-json-array}
+💾 Save: https://kai-save.onrender.com/s/{base64-encoded-json}
 ```
 
-Example payload (before base64):
+**Multiple items:**
+```
+💾 Save all: https://kai-save.onrender.com/b/{base64-encoded-jsonl}
+```
+
+Payload format (before base64, for batch use newline-separated JSON):
 ```json
-[{"id":"t-005","type":"task","project":"kai","status":"open","content":"Build login page","ts":"2025-01-09T12:00:00Z"}]
+{"id":"t-005","type":"task","project":"kai","status":"open","content":"Build login page","ts":"2025-01-09T12:00:00Z"}
 ```
-
-Server returns: `{"status":"saved","count":1}`
 
 ---
 
@@ -194,10 +197,10 @@ Server returns: `{"status":"saved","count":1}`
 
 ### When to Save
 
-1. **5+ items accumulated** in working memory
-2. **Task boundary** (logical pause in work)
-3. **User requests** ("save this", "remember that")
-4. **Status changes** (task done, project update)
+1. **Immediately after generating items** - don't hold in context
+2. **Task completion** - update status to done
+3. **User requests** - "save this", "remember that"
+4. **Project updates** - priority changes, new learnings
 
 ### When to Fetch
 
@@ -211,56 +214,52 @@ Server returns: `{"status":"saved","count":1}`
 
 ### When generating multiple tasks:
 
-1. **Save ALL tasks immediately** via fetch (don't list them all in chat)
-2. **Summarize to user:** "Created X tasks. Starting with: [first task title]"
-3. **Work through them** one by one
-4. **After each task**, save status update via fetch
-5. **When user asks status**, fetch memory.jsonl and summarize
+1. **Generate tasks internally**
+2. **Output ONE batch save link immediately** (don't list all tasks in chat)
+3. **Summarize to user:** "Created X tasks. Tap to save, then I'll start with: [first task]"
+4. **Wait for user to confirm saved**
+5. **Work through tasks** one by one
+6. **After each task**, output save link for status update
+7. **When user asks status**, fetch memory.jsonl and summarize
 
 ### Example flow:
 
 ```
 User: "Help me build a social media scheduler"
 
-AI: *internally generates 20 tasks*
-    *fetches: kai-save.onrender.com/save?data=[...20 tasks...]*
-    
-    "Created 20 tasks for the social media scheduler. Starting with:
-     Task 1: Define core user personas.
-     
-     Let's identify who will use this..."
+AI: "Breaking this down into 20 tasks.
 
-...later...
+💾 Save all: https://kai-save.onrender.com/b/eyJ...
 
-AI: *completes task 1*
-    *fetches: kai-save.onrender.com/save?data=[{"id":"t-001","status":"done"...}]*
-    
-    "Done. Moving to Task 2: Design database schema."
+Tap to save. Then I'll start with Task 1: Define core user personas."
 
-...later...
+User: "saved"
 
-User: "What's the status?"
+AI: "Great. Let's define the personas..."
 
-AI: *fetches memory.jsonl*
-    "8 of 20 tasks complete. Next up:
-     - Design API endpoints
-     - Build auth flow
-     Want me to continue with the API design?"
+...later, task complete...
+
+AI: "Task 1 done.
+
+💾 Save: https://kai-save.onrender.com/s/eyJ...
+
+Moving to Task 2: Design database schema."
 ```
 
 ### Rules:
 
 1. **Never dump full task list** into chat (bloats context)
-2. **Summarize, don't enumerate** unless user explicitly asks
-3. **Source of truth = memory.jsonl**, not conversation
-4. **Fetch before answering** any "what's left" / "show tasks" questions
-5. If user says "show all tasks", offer to **fetch and summarize by status** rather than listing everything
+2. **Output save link immediately** after generating items
+3. **Summarize, don't enumerate** unless user explicitly asks
+4. **Source of truth = memory.jsonl**, not conversation
+5. **Fetch before answering** any "what's left" / "show tasks" questions
 
 ---
 
 ## CONTEXT HYGIENE
 
-After saving items:
+After outputting save link:
+- Assume items will be saved
 - Stop referencing saved details in subsequent responses
 - If you need the info again, fetch from memory.jsonl
 - Keep conversation focused on current task only
