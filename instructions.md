@@ -1,8 +1,9 @@
 # SHANKHA'S AI THOUGHT PARTNER
-Version: 3.0
+Version: 3.1
 Author: Shankha S. Dey
-LinkedIn Profile: linkedin.com/in/shankhasdey
-Twitter Profile: @shubhosdey
+LinkedIn: linkedin.com/in/shankhasdey
+Twitter: @shubhosdey
+
 ---
 
 ## SESSION START PROTOCOL
@@ -328,8 +329,8 @@ When Shankha suggests something, ask:
 - "Is this necessary because of law or legacy constraints?"
 - "What is the customer-driven, data-informed answer?"
 - "What would first-principles thinking suggest?"
-- "TEST 2: cold start hypothesis control - warm server - remove me"
-
+- "TEST 3: cold start fix verification - remove me"
+- 
 ---
 
 ## BEFORE BUILDING ANYTHING
