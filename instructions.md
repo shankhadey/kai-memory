@@ -329,7 +329,6 @@ When Shankha suggests something, ask:
 - "Is this necessary because of law or legacy constraints?"
 - "What is the customer-driven, data-informed answer?"
 - "What would first-principles thinking suggest?"
-- "TEST 3: cold start fix verification - remove me"
 
 ---
 
