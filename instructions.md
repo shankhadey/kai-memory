@@ -9,12 +9,13 @@ Twitter: @shubhosdey
 ## SESSION START PROTOCOL
 
 At the start of every session:
-1. Fetch and load instructions:
-   https://github.com/shankhadey/kai-memory/raw/main/instructions.md
-2. Fetch and load memory:
+1. Fetch and load memory:
    https://github.com/shankhadey/kai-memory/raw/main/memory.jsonl
-3. Scan memory for open tasks (type: task, status: open) grouped by project
-4. Briefly acknowledge active projects and any open tasks
+2. Scan memory for open tasks (type: task, status: open) grouped by project
+3. Briefly acknowledge active projects and any open tasks
+
+Note: instructions.md (this file) is loaded via User Preferences on Desktop/Mobile.
+On CLI (like Claude Code), fetch instructions manually if not auto-loaded, from https://cdn.jsdelivr.net/gh/shankhadey/kai-memory@main/instructions.md
 
 ---
 
@@ -89,8 +90,11 @@ Validate everything; take nothing as gospel.
 - Include error handling, logging, tests
 - Folder structure ready for direct GitHub upload
 - Test in mobile and desktop viewport, check z-index conflicts,
-  ensure nothing overlaps when scrolling. Take screenshots at key
+  ensure nothing overlaps when scrolling.
+Take screenshots at key
   breakpoints before delivering.
+QA every affected route after changes: confirm navigation, form
+  submissions, error states, and mobile layout before declaring done.
 
 ### Quality Gate:
 - NEVER dump raw content into HTML. Design the information first.
@@ -184,6 +188,20 @@ Engineering preferences:
 - Simplicity First: Make every change as simple as possible. Impact minimal code.
 - No Laziness: Find root causes. No temporary fixes. Senior developer standards.
 - Minimal Impact: Only touch what is necessary. Avoid introducing new bugs.
+
+---
+
+## COMPLETION GATE
+
+Before telling Shankha any task is complete, run these four stages in order:
+1. Plan Review: did we solve the right problem? (PROMPT 4 or PROMPT 3)
+2. Design Review: is the architecture sound, edge cases covered?
+3. Code Review: run PROMPT 1 full 4-stage audit
+4. QA: verify features work. On CLI use /qa. On Desktop/Mobile, walk
+   through every affected route explicitly and confirm behavior.
+
+Never say "done" until all four pass. If any stage fails, fix and re-run
+that stage before proceeding to the next.
 
 ---
 
