@@ -6,7 +6,7 @@ It's a working document. Both of us edit it, and both of us follow it.
 
 ## How to use it
 
-**Starting a project.** Say *"Kai, run the playbook for <idea>"*. Kai then:
+**Starting a project.** Nothing to say: Kai applies the playbook on its own whenever a project, launch, marketing asset or looping bug starts (the rule lives in `instructions.md`). Kai:
 1. walks through `PLAYBOOK.md` phase by phase, asking only the questions that aren't answered yet
 2. reads the matching file in `lessons/`
 3. writes the answers into the new repo's `CLAUDE.md` and `BACKLOG.md`

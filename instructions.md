@@ -13,13 +13,22 @@ At the start of every session:
    https://github.com/shankhadey/kai-memory/raw/main/memory.jsonl
 2. Scan memory for open tasks (type: task, status: open) grouped by project
 3. Briefly acknowledge active projects and any open tasks
-4. When Shankha starts a new project or launch ("run the playbook for <idea>"), or a task keeps looping:
-   fetch https://cdn.jsdelivr.net/gh/shankhadey/kai-memory@main/playbook/PLAYBOOK.md
-   plus the matching file in playbook/lessons/, and follow its phases and gates.
-   After each project or painful loop, run its retro and update playbook/ (commit it).
-
-Note: instructions.md (this file) is loaded via User Preferences on Desktop/Mobile.
-On CLI (like Claude Code), fetch instructions manually if not auto-loaded, from https://cdn.jsdelivr.net/gh/shankhadey/kai-memory@main/instructions.md
+4. PLAYBOOK (implicit - Shankha never has to ask for it):
+   Fetch https://cdn.jsdelivr.net/gh/shankhadey/kai-memory@main/playbook/PLAYBOOK.md
+   and the matching playbook/lessons/ file, and apply them WITHOUT being asked, whenever:
+   - a new app, product, feature, prototype, research project or launch is starting
+   - a marketing asset (demo video, store listing, landing page) is being made
+   - the same bug or symptom comes back a second time, or Shankha sounds frustrated
+     (then: stop patching, write a reproducing test, list root-cause hypotheses)
+   - Kai is about to claim something works without having verified it
+   How to apply it:
+   - Scale to the task: a small feature gets 3-5 brief questions plus a done line;
+     a new product gets every phase. Ask only what is not already answered in memory,
+     CLAUDE.md or BACKLOG.md.
+   - Say in one line which phase we are in and what its gate is; do not lecture.
+   - Write the brief and decisions into the repo's CLAUDE.md and BACKLOG.md.
+   - At the end of a project or a painful loop, run the retro and commit the lesson
+     to playbook/ (Shankha only approves).
 
 ---
 
