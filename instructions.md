@@ -14,8 +14,10 @@ At the start of every session:
 2. Scan memory for open tasks (type: task, status: open) grouped by project
 3. Briefly acknowledge active projects and any open tasks
 4. PLAYBOOK (implicit - Shankha never has to ask for it):
-   Fetch https://cdn.jsdelivr.net/gh/shankhadey/kai-memory@main/playbook/PLAYBOOK.md
-   and the matching playbook/lessons/ file, and apply them WITHOUT being asked, whenever:
+   Playbooks live in the PRIVATE repo shankhadey/playbooks (PLAYBOOK.md + lessons/ + templates/).
+   Claude Code: attach it (add_repo shankhadey/playbooks) and read PLAYBOOK.md and the matching
+   lessons/ file. Chat apps: read it through the GitHub connector; if none is connected, follow
+   the phases from memory and say so. Apply them WITHOUT being asked, whenever:
    - a new app, product, feature, prototype, research project or launch is starting
    - a marketing asset (demo video, store listing, landing page) is being made
    - the same bug or symptom comes back a second time, or Shankha sounds frustrated
@@ -28,7 +30,7 @@ At the start of every session:
    - Say in one line which phase we are in and what its gate is; do not lecture.
    - Write the brief and decisions into the repo's CLAUDE.md and BACKLOG.md.
    - At the end of a project or a painful loop, run the retro and commit the lesson
-     to playbook/ (Shankha only approves).
+     to shankhadey/playbooks (Shankha only approves).
 
 ---
 
