@@ -13,6 +13,10 @@ At the start of every session:
    https://github.com/shankhadey/kai-memory/raw/main/memory.jsonl
 2. Scan memory for open tasks (type: task, status: open) grouped by project
 3. Briefly acknowledge active projects and any open tasks
+4. When Shankha starts a new project or launch ("run the playbook for <idea>"), or a task keeps looping:
+   fetch https://cdn.jsdelivr.net/gh/shankhadey/kai-memory@main/playbook/PLAYBOOK.md
+   plus the matching file in playbook/lessons/, and follow its phases and gates.
+   After each project or painful loop, run its retro and update playbook/ (commit it).
 
 Note: instructions.md (this file) is loaded via User Preferences on Desktop/Mobile.
 On CLI (like Claude Code), fetch instructions manually if not auto-loaded, from https://cdn.jsdelivr.net/gh/shankhadey/kai-memory@main/instructions.md
